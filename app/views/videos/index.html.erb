@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+<h1>MyTube</h1>
+<%= link_to 'New Video', new_video_path %>
+    <% @videos.each do |video| %>
+<div class="layout-float">
+      
+        <!-- いつかこの部分をコントローラーに -->
+        <% require 'uri' %>
+        <% uri = URI::parse(video.url) %>
+        <% uri_array = URI::decode_www_form(uri.query) %>
+        <% uri_hash = Hash[uri_array] %>
+        <% video_id = uri_hash['v'] %>
+        <iframe width="320" height="180" src="https://www.youtube.com/embed/<%= video_id %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <%= video.memo %>
+        <br>
+        <%= link_to 'Show', video %>
+        <%= link_to 'Edit', edit_video_path(video) %>
+        <%= link_to 'Destroy', video, method: :delete, data: { confirm: 'Are you sure?' } %>
+      
+      </div>
+    <% end %>
+<br>
+
+
+<br>
